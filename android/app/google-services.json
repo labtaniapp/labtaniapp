@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "111411901832",
+    "project_id": "labtaniconakry",
+    "storage_bucket": "labtaniconakry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111411901832:android:9db3f0eaed35fc7f70363d",
+        "android_client_info": {
+          "package_name": "com.example.labtani_docteur_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111411901832-gd34ls6e79p5gto14kgqdj2rduudn4ak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl5oFfzHIldN55idmBZ4jzjUNO0v8fZL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111411901832-gd34ls6e79p5gto14kgqdj2rduudn4ak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
