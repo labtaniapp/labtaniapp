@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 
@@ -36,7 +37,7 @@ class CustomTextField extends StatelessWidget
           border: InputBorder.none,
           prefixIcon: Icon(
             data,
-            color: Colors.cyan,
+            color: Colors.blue,
           ),
           focusColor: Theme.of(context).primaryColor,
           hintText: hintText,

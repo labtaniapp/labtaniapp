@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:labtani_docteur_app/Widgets/progress_bar.dart';
+import 'package:labtani_docteur/Widgets/progress_bar.dart';
 
 class LoadingDialog extends StatelessWidget
 {

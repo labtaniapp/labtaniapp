@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:labtani_docteur_app/Components/rounded_button.dart';
-import 'package:labtani_docteur_app/Components/social-page.dart';
+import 'package:labtani_docteur/Components/rounded_button.dart';
+import 'package:labtani_docteur/Components/social-page.dart';
 
 class OnboardingPage extends StatelessWidget {
   OnboardingPage(

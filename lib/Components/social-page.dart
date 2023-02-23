@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:labtani_docteur_app/Authentification/Login_Screen.dart';
-import 'package:labtani_docteur_app/Components/delayed_animation.dart';
+import 'package:labtani_docteur/Authentification/Login_Screen.dart';
+import 'package:labtani_docteur/Components/delayed_animation.dart';
 
 class social_page extends StatelessWidget {
   @override
@@ -67,7 +67,7 @@ class social_page extends StatelessWidget {
                                ElevatedButton(
                                onPressed: (){
                                 Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
+                                builder: (context) => loginScreen()),
                                 );
                                  },
                                 style:ElevatedButton.styleFrom(
@@ -88,7 +88,7 @@ class social_page extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(
-                                   builder: (context) => LoginScreen(),
+                                   builder: (context) => loginScreen(),
                                   ),
                                   );
                                   },
@@ -110,7 +110,7 @@ class social_page extends StatelessWidget {
                                 ElevatedButton(
                                 onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => LoginScreen(),
+                                  builder: (context) => loginScreen(),
                                   ),
                                   );
                                   },
