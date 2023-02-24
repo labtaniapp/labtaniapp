@@ -104,7 +104,7 @@ class _loginScreenState extends State<loginScreen> {
         await sharedPreferences!.setString("lastName", snapshot.data()!["lastName"]);
 
         Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (c)=>  homepagescreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=>  Home()));
       }
       else
       {

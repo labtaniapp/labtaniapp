@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:labtani_docteur/Components/textscale.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Components/global.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        builder: fixTextScale,
         title: 'Docteur App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

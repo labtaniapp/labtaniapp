@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
+import 'package:labtani_docteur/Authentification/Login_Screen.dart';
 import 'package:labtani_docteur/Authentification/register_screen_document.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
@@ -173,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       saveDataToFirestore(currentUser!).then((value) {
         Navigator.pop(context);
         //send user to homePage
-        Route newRoute = MaterialPageRoute(builder: (c) => doctordocument());
+        Route newRoute = MaterialPageRoute(builder: (c) => Home());
         Navigator.pushReplacement(context, newRoute);
       });
     }
@@ -211,174 +214,235 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const SizedBox(height: 10,),
-            InkWell(
-              onTap: ()
-              {
-                _getImage();
-              },
-              child: CircleAvatar(
-                radius: MediaQuery.of(context).size.width * 0.20,
-                backgroundColor: Colors.white,
-                backgroundImage: imageXFile==null ? null : FileImage(File(imageXFile!.path)),
-                child: imageXFile == null
-                    ?
-                Icon(
-                  Icons.add_photo_alternate,
-                  size: MediaQuery.of(context).size.width * 0.20,
-                  color: Colors.grey,
-                ) : null,
-              ),
-            ),
-            const SizedBox(height: 10,),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  CustomTextField(
-                    data: Icons.person,
-                    controller: lastNameController,
-                    hintText: "LastName",
-                    isObsecre: false,
-                  ),
-                  CustomTextField(
-                    data: Icons.person,
-                    controller: firstnameController,
-                    hintText: "FirstName",
-                    isObsecre: false,
-                  ),
-                  CustomTextField(
-                    data: Icons.email,
-                    controller: emailController,
-                    hintText: "email",
-                    isObsecre: false,
-                  ),
-                  CustomTextField(
-                    data: Icons.lock,
-                    controller: passwordController,
-                    hintText: "Password",
-                    isObsecre: true,
-                  ),
-                  CustomTextField(
-                    data: Icons.lock,
-                    controller: confirmPasswordController,
-                    hintText: "Confirm Password",
-                    isObsecre: true,
-                  ),
-                  CustomTextField(
-                    data: Icons.phone,
-                    controller: phoneController,
-                    hintText: "Phone",
-                    isObsecre: false,
-                  ),
-                  TextField(
-                    controller: birthDate, //editing controller of this TextField
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.calendar_today), //icon of text field
-                        labelText: "Enter birth Date" //label text of field
-                    ),
-                      readOnly: true,  //set it true, so that user will not able to edit text
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime(2001),
-                            firstDate: DateTime(1945),
-                            //DateTime.now() - not to allow to choose before today.
-                            lastDate: DateTime.now()
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading:IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+    ),
+    ),
 
-                        );
-                      }
+      body: CustomScrollView(
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child:Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                const SizedBox(height: 10,),
+                InkWell(
+                  onTap: ()
+                  {
+                    _getImage();
+                  },
+                  child: CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.20,
+                    backgroundColor: Colors.white,
+                    backgroundImage: imageXFile==null ? null : FileImage(File(imageXFile!.path)),
+                    child: imageXFile == null
+                        ?
+                    Icon(
+                      Icons.add_photo_alternate,
+                      size: MediaQuery.of(context).size.width * 0.20,
+                      color: Colors.grey,
+                    ) : null,
                   ),
-
-              CustomTextField(
-                data: Icons.arrow_drop_down,
-                controller: genderTextEditingController,
-                hintText: "gender",
-                isObsecre: false,
-
-              ),
-                  Padding(
+                ),
+                Padding(
                   padding: const EdgeInsets.all(10.0),
-                      child: SizedBox(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.8,
-                          child: Row(
-                            children: [
-                              Text(
-                            "Gender",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w400),
-                                  ),
-                                  SizedBox(
-                                  width: 15,
-                                  ),
-                             Container (
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: DropdownButton(
-                                  items: <String> ['Male',
-                                    'Female',
-                                    'Trans Gender',
-                                    'Others' ].map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                    // After selecting the desired option,it will
-                                    // change button value to selected value
-                                    isExpanded: true,
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        dropdownvalue = newValue!;
-                                      });
-                                    }
-                                )
-                                )
-                ],
-                                ),
-              ),
-            ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(30, 30, 30, 20),
-                    child: SizedBox(
-                      height: 54,
-                      width: 314,
-                      child: ElevatedButton(
-                          child: Text(
-                            "Continue",
-                            style: TextStyle(
-                              fontFamily: "Urbanist",
-                                color: Colors.cyan, fontSize: 16),
+                  child: SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: TextFormField(
+                        controller: lastNameController,
+                        style: GoogleFonts.montserrat(
+                            color: Colors.black),
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.grey,
+                            hintText: "Name",
+                            hintStyle: GoogleFonts.poppins(
+                                color: Colors.black, fontSize: 18),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ))),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Row(
+                      children: [
+                        Text(
+                          "Gender",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.grey.shade200,
                           ),
-                        onPressed: ()  async {
-                          formValidation();
-                          final SharedPreferences sharedPreferences =
-                          await SharedPreferences.getInstance();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            elevation: 10,
-                            padding: EdgeInsets.all(10.0),
-                            primary: Colors.blue,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0))),
-                      ),
+                          child: DropdownButton(
+                              dropdownColor: Colors.blue,
+                              borderRadius: BorderRadius.circular(5.0),
+                              // Initial Value
+                              value: dropdownvalue,
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: <String>[
+                                'Male',
+                                'Female',
+                                'Trans Gender',
+                                'Others'
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownvalue = newValue!;
+                                });
+                              }),
+                        ),
+                      ],
                     ),
                   ),
-                        ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: TextFormField(
+                        controller: emailController,
+                        style: GoogleFonts.montserrat(
+                            color: Colors.black),
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: CupertinoColors.lightBackgroundGray,
+                            hintText: "Email",
+                            hintStyle: GoogleFonts.poppins(
+                                color: Colors.black, fontSize: 18),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ))),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: TextFormField(
+                        obscureText: true,
+                        controller: passwordController,
+                        style: GoogleFonts.montserrat(
+                            color: Colors.black),
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: CupertinoColors.lightBackgroundGray,
+                            hintText: "Password",
+                            hintStyle: GoogleFonts.poppins(
+                                color: Colors.black, fontSize: 18),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ))),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: TextFormField(
+                        obscureText: true,
+                        style: GoogleFonts.montserrat(
+                            color: Colors.black),
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: CupertinoColors.lightBackgroundGray,
+                            hintText: "Confirm Password",
+                            hintStyle: GoogleFonts.poppins(
+                                color: Colors.black, fontSize: 18),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ))),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(30, 30, 30, 20),
+                  child: SizedBox(
+                    height: 54,
+                    width: 314,
+                    child: ElevatedButton.icon(
+                      icon: Icon(
+                        Icons.app_registration,
+                        size: 24,
+                        color: Colors.black,
                       ),
-                    ),
-          ],
+                      label: Center(
+                        child: Text(
+                          "SIGN UP",
+                          style: GoogleFonts.montserrat(
+                              color: Colors.black, fontSize: 18),
                         ),
+                      ),
+                      onPressed: () async {
+                        String d = emailController.text.trim();
+                      formValidation();
+                        final SharedPreferences sharedPreferences =
+                        await SharedPreferences.getInstance();
+                        sharedPreferences.setString('email', d);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          elevation: 10,
+                          padding: EdgeInsets.all(10.0),
+                          primary: CupertinoColors.lightBackgroundGray,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0))),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                TextButton(
+                  child: Text("Already have an account? Log In"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => loginScreen()),
+                    );
+                  },
+                ),
+                Spacer()
+              ],
+            ),
+          )
+          )
+        ],
+
       ),
-                  );
-                }
-              }
+      );
+
+  }
+}

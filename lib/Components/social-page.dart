@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:labtani_docteur/Authentification/Login_Screen.dart';
 import 'package:labtani_docteur/Components/delayed_animation.dart';
 
+import '../HomeScreen/homepage.dart';
+
 class social_page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class social_page extends StatelessWidget {
                                ElevatedButton(
                                onPressed: (){
                                 Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => loginScreen()),
+                                builder: (context) => Home()),
                                 );
                                  },
                                 style:ElevatedButton.styleFrom(

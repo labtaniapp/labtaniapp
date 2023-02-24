@@ -26,8 +26,8 @@ class CustomTextField extends StatelessWidget
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      padding: const EdgeInsets.all(8.0),
-      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(0.0),
+      margin: const EdgeInsets.all(0),
       child: TextFormField(
         enabled: enabled,
         controller: controller,
